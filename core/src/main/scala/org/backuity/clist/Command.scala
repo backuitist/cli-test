@@ -133,7 +133,18 @@ abstract class Command(name: String = null, val description: String = "") extend
   }
 
   private[this] def setVar(name: String, tpe: Class[_], value: Any): Unit = {
-    getClass.getMethod(name + "_$eq", tpe).invoke(this, value.asInstanceOf[Object])
+    value match {
+      case v: Seq[_] =>
+        val seq = Option(getVar(name)).fold(Seq.empty[Any])(_.asInstanceOf[Seq[Any]])
+        getClass.getMethod(name + "_$eq", tpe).invoke(this, seq ++ v)
+
+      case _ =>
+        getClass.getMethod(name + "_$eq", tpe).invoke(this, value.asInstanceOf[Object])
+    }
+  }
+
+  private[this] def getVar(name: String): Any = {
+    getClass.getMethod(name).invoke(this).asInstanceOf[Any]
   }
 
   def label = _name
@@ -187,7 +198,7 @@ object Command {
     def validateAllArgs: ParseContext = new ParseContext(args, opts, Nil)
 
     def validate(opt: CliOption[_], arg: String): ParseContext = {
-      new ParseContext(args, opts.filter(_ != opt), remainingArgs.filter(_ != arg))
+      new ParseContext(args, opts, remainingArgs.filter(_ != arg))
     }
 
     /**
