@@ -1,4 +1,4 @@
-lazy val commonSettings = Seq(
+lazy val CommonSettings = Seq(
   organization := "org.backuity.clist",
   scalaVersion := "2.12.2",
   version := "3.4.0",
@@ -13,7 +13,7 @@ lazy val commonSettings = Seq(
   unmanagedClasspath in Test ++= update.value.select(configurationFilter("compileonly"))
 )
 
-lazy val releaseSettings = commonSettings ++ Seq(
+lazy val releaseSettings = CommonSettings ++ Seq(
   homepage := Some(url("https://github.com/backuity/clist")),
   licenses := Seq("Apache 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.html")),
 
@@ -46,7 +46,7 @@ lazy val releaseSettings = commonSettings ++ Seq(
       </developers>
 )
 
-lazy val localSettings = commonSettings ++ Seq(
+lazy val localSettings = CommonSettings ++ Seq(
   publish := {},
   publishLocal := {}
 )
