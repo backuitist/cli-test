@@ -1,7 +1,7 @@
 lazy val CommonSettings = Seq(
   organization := "org.backuity.clist",
   scalaVersion := "2.12.2",
-  version := "3.4.0",
+  version := "3.5.0",
 
   crossScalaVersions := Seq("2.11.11", "2.12.2"),
   scalacOptions ++= Seq("-deprecation", "-unchecked"),
@@ -91,7 +91,7 @@ lazy val tests = project.in(file("tests")).
   settings(localSettings: _*).
   settings(
     fork in Test := true,
-    envVars in Test := Map("EXPORTED_ENV_OPT" -> "fooBarBaz"),
+    envVars in Test := Map("EXPORTED_ENV_OPT" -> "fooBarBaz", "INT_ENV_OPT" -> "4"),
     libraryDependencies ++= Seq(
       ansi(scalaBinaryVersion.value),
       junit, matchete(scalaBinaryVersion.value))).

@@ -42,6 +42,14 @@ class OptionTest extends ClistTestBase {
     EnvRun.exportedEnvOpt must_== "explicitValue"
   }
 
+  @Test
+  def useIntValueForEnvVar(): Unit = {
+    Cli.parse(Array()).withCommand(EnvRun)() must_== Some(EnvRun)
+    EnvRun.missingEnvOpt must_== "defaultValue"
+    EnvRun.exportedEnvOpt must_== "fooBarBaz"
+    EnvRun.intEnvOpt must_== 4
+  }
+
 }
 
 object OptionTest {
@@ -53,6 +61,7 @@ object OptionTest {
   object EnvRun extends Command {
     var missingEnvOpt = opt[String](useEnv = true, default = "defaultValue")
     var exportedEnvOpt = opt[String](useEnv = true, default = "shouldBeNeverUsed")
+    var intEnvOpt = opt[Int](useEnv = true, default = 1)
   }
 
 }
