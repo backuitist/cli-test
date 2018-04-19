@@ -152,7 +152,12 @@ abstract class Command(name: String = null, val description: String = "") extend
   }
 
   private[this] def setVar(name: String, tpe: Class[_], value: Any): Unit = {
-    getClass.getMethod(name + "_$eq", tpe).invoke(this, value.asInstanceOf[Object])
+    try
+      getClass.getMethod(name + "_$eq", tpe).invoke(this, value.asInstanceOf[Object])
+    catch {
+      case ex: IllegalArgumentException =>
+        throw new IllegalArgumentException(ansi"Attribute %bold{$name} of type ${tpe.getSimpleName} is incompatible with value '$value'", ex)
+    }
   }
 
   def label = _name
