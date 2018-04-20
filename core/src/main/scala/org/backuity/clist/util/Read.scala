@@ -8,7 +8,7 @@ trait Read[A] {
   def reads(string: String): A
 }
 
-case class ReadException(value: String, expected: String) extends RuntimeException
+case class ReadException(value: String, expected: String) extends RuntimeException(s"value: $value, expected: $expected ")
 
 /**
  * Note that we do not support scala Enumeration as this would require having a runtime dependency
