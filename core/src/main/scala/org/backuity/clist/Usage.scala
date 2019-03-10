@@ -137,11 +137,11 @@ object Usage {
               indent {
                 addOptions(commandSpecificOpts)
               }
-              val commandSpecificArgs = command.arguments
-              if (commandSpecificArgs.nonEmpty) {
-                indent {
-                  addArguments(commandSpecificArgs)
-                }
+            }
+            val commandSpecificArgs = command.arguments
+            if (commandSpecificArgs.nonEmpty) {
+              indent {
+                addArguments(commandSpecificArgs)
               }
             }
           }
